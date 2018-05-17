@@ -1,11 +1,16 @@
 import path from 'path';
-import { EventEmitter } from 'events';
 
-import { name } from './config';
+import {
+    name
+} from './config';
+import {
+    EVENT_TYPE
+} from './src/async/constants';
 
-import { EVENT_TYPE} from './src/async/constants';
-
-import { User, Product } from './src/models';
+import {
+    User,
+    Product
+} from './src/models';
 
 import DirWatcher from './src/async/dirwatcher/DirWatcher';
 import CsvImporter from './src/async/importer/CsvImporter';
@@ -16,19 +21,14 @@ new Product();
 
 const DATA_PATH = path.resolve(__dirname, 'data');
 
-const eventEmitter = new EventEmitter();
-
-const dirWatcher = new DirWatcher(eventEmitter);
-dirWatcher.watch(DATA_PATH, 5000);
-
+const dirWatcher = new DirWatcher();
 const importer = new CsvImporter();
 
-eventEmitter.on(EVENT_TYPE.DIRWATCHER_CHANGED, async (path) => {
-    const data = await importer.import(`${DATA_PATH}/${path}`);
-    console.log(data);
-});
+dirWatcher
+    .watch(DATA_PATH, 1000);
 
-eventEmitter.on(EVENT_TYPE.DIRWATCHER_CHANGED, (path) => {
-    const data = importer.importSync(`${DATA_PATH}/${path}`);
-    console.log(data);
-});
+dirWatcher
+    .on(EVENT_TYPE.DIRWATCHER_CHANGED, async (path) => {
+        const data = await importer.readDir(`${path}`);
+        console.log(data);
+    });

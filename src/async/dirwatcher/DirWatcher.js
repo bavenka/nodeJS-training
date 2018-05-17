@@ -1,18 +1,23 @@
+import {
+  EventEmitter
+} from 'events';
+import chokidar from 'chokidar';
+import {
+  EVENT_TYPE
+} from '../constants';
 import fs from 'fs';
 
-import { EVENT_TYPE } from '../constants';
 
+export default class DirWatcher extends EventEmitter {
 
-export default class DirWatcher {
-  constructor(eventEmitter) {
-    this.eventEmitter = eventEmitter;
+  watch(path, delay) {
+    const watcher = chokidar
+      .watch(path, {
+        usePolling: true,
+        interval: delay
+      });
+
+    watcher
+      .on("all", () => this.emit(EVENT_TYPE.DIRWATCHER_CHANGED, path));
   }
-
-    watch(path, delay = 0) {
-        fs.watch(path, (eventType, fileName) => {
-          setTimeout(() => {
-            this.eventEmitter.emit(EVENT_TYPE.DIRWATCHER_CHANGED, fileName);
-          }, delay);
-        });
-      }
 }
