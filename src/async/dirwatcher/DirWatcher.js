@@ -5,7 +5,6 @@ import chokidar from 'chokidar';
 import {
   EVENT_TYPE
 } from '../constants';
-import fs from 'fs';
 
 
 export default class DirWatcher extends EventEmitter {
