@@ -29,6 +29,6 @@ dirWatcher
 
 dirWatcher
     .on(EVENT_TYPE.DIRWATCHER_CHANGED, async (path) => {
-        const data = await importer.readDir(path);
+        const data = await importer.import(path);
         console.log(data);
     });

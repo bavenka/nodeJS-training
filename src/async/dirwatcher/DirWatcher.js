@@ -9,14 +9,14 @@ import {
 
 export default class DirWatcher extends EventEmitter {
 
-  watch(path, delay) {
+  watch(dir, delay) {
     const watcher = chokidar
-      .watch(path, {
+      .watch(dir, {
         usePolling: true,
         interval: delay
       });
 
     watcher
-      .on("all", () => this.emit(EVENT_TYPE.DIRWATCHER_CHANGED, path));
+      .on('add', path => this.emit(EVENT_TYPE.DIRWATCHER_CHANGED, path))
   }
 }
