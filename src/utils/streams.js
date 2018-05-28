@@ -132,15 +132,18 @@ function cssBundler(dirPath) {
     }
     readdir(dirPath)
         .then((files) => {
-            const stream = fs.createWriteStream(dirPath + '/bundle.css');
+            const writeStream = fs.createWriteStream(dirPath + '/bundle.css');
             const cssFiles = files.filter(file => path.extname(file) === '.css' && file !== 'bundle.css');
 
             cssFiles.forEach((file) => {
                 fs.createReadStream(`${dirPath}\\${file}`)
-                    .pipe(stream);
+                  .on('data', (chunk) => writeStream.write(chunk))
+                  .on('error', (error) => console.log(error))
             });
 
-            request.get('https://epa.ms/nodejs18-hw3-css')
-                .pipe(stream);
+          request.get('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+            .on('data', (chunk) => writeStream.write(chunk))
+            .on('error', (error) => console.log(error))
         })
+      .catch(e => console.log(e));
 }
