@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js  --exec babel-node --presets env",
+    "start": "nodemon index.js  --exec babel-node --presets env",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pavel <Pavel_Kavalchuk@epam.com>",
@@ -17,7 +17,9 @@
     "nodemon": "^1.17.3"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
     "chokidar": "^2.0.3",
-    "csv-parse": "^2.4.0"
+    "csv-parse": "^2.4.0",
+    "express": "^4.16.3"
   }
 }

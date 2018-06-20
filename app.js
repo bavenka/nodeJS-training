@@ -1,34 +1,20 @@
-import path from 'path';
+import express from 'express';
+import bodyParser from 'body-parser';
 
-import {
-    name
-} from './config';
-import {
-    EVENT_TYPE
-} from './src/async/constants';
+import { UserRoute, ProductRoute } from './src/routes';
 
-import {
-    User,
-    Product
-} from './src/models';
+import cookieParser from './src/middlewares/parsers/cookieParser';
+import queryParser from './src/middlewares/parsers/queryParser';
 
-import DirWatcher from './src/async/dirwatcher/DirWatcher';
-import CsvImporter from './src/async/importer/CsvImporter';
 
-console.log(name);
-new User();
-new Product();
+const app = express();
 
-const DATA_PATH = path.resolve(__dirname, 'data');
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+app.use(cookieParser);
+app.use(queryParser);
 
-const dirWatcher = new DirWatcher();
-const importer = new CsvImporter();
+app.use('/api/users', UserRoute);
+app.use('/api/products', ProductRoute);
 
-dirWatcher
-    .watch(DATA_PATH, 1000);
-
-dirWatcher
-    .on(EVENT_TYPE.DIRWATCHER_CHANGED, async (path) => {
-        const data = await importer.import(path);
-        console.log(data);
-    });
+export default app;
