@@ -1,7 +1,8 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import passport from 'passport';
+import session from 'express-session';
 
-import { UserRoute, ProductRoute } from './src/routes';
+import { UserRoute, ProductRoute, AuthRoute } from './src/routes';
 
 import cookieParser from './src/middlewares/parsers/cookieParser';
 import queryParser from './src/middlewares/parsers/queryParser';
@@ -9,12 +10,19 @@ import queryParser from './src/middlewares/parsers/queryParser';
 
 const app = express();
 
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 app.use(cookieParser);
 app.use(queryParser);
+app.use(passport.initialize());
+app.use(session({
+  secret: 'Secret',
+  resave: true,
+  saveUninitialized: true
+}));
 
-app.use('/api/users', UserRoute);
-app.use('/api/products', ProductRoute);
+app.use('/api', AuthRoute);
+app.use('/api', UserRoute);
+app.use('/api', ProductRoute);
 
 export default app;
