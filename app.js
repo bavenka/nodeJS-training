@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { UserRoute, ProductRoute } from './src/routes';
+import { UserRoute, ProductRoute, CityRoute } from './src/routes';
 
 import cookieParser from './src/middlewares/parsers/cookieParser';
 import queryParser from './src/middlewares/parsers/queryParser';
@@ -16,5 +16,6 @@ app.use(queryParser);
 
 app.use('/api/users', UserRoute);
 app.use('/api/products', ProductRoute);
+app.use('/api/cities', CityRoute);
 
 export default app;
