@@ -1,9 +1,10 @@
-export const users = [
-  { id: 1, login: "pavel", email: "bavenka@gmail1.com", password: "test1", name: "pavel", age: 22 },
-  { id: 2, login: "denis", email: "denis@mail.ru", password: "test2", name: "denis", age: 25 },
-  { id: 3, login: "alex",email: "alex@mail.ru", password: "test3", name: "alex", age: 21 }
-];
+import { getAll, removeById } from '../services/UserService';
 
-export const getUsers = (req, res, next) => {
-  res.status(200).json(users);
-};
+
+export const getUsers = (req, res, next) => getAll()
+  .then(data => res.status(200).json(data))
+  .catch(e => res.status(500).json({ error: e.message }));
+
+export const removeUser = (req, res) => removeById(req.params.id)
+  .then(data => res.status(200).json(data))
+  .catch(e => res.status(500).json({ error: e.message }));

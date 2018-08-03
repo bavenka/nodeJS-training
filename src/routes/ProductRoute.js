@@ -1,14 +1,14 @@
 import express from 'express';
 
-import verifyJwt from '../middlewares/verifyJwt';
 import * as productController from '../controllers/ProductController';
 
 
 const productRoute = express.Router();
 
-productRoute.get('/products', verifyJwt, productController.getProducts);
-productRoute.get('/products/:id', verifyJwt, productController.getProduct);
-productRoute.get('/products/:id/reviews', verifyJwt, productController.getProductReviews);
-productRoute.post('/products', verifyJwt, productController.addProduct);
+productRoute.get('/', productController.getProducts);
+productRoute.get('/:id', productController.getProduct);
+productRoute.get('/:id/reviews', productController.getProductReviews);
+productRoute.post('/', productController.addProduct);
+productRoute.delete('/:id', productController.removeProduct);
 
 export default productRoute;
