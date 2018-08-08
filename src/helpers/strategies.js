@@ -11,15 +11,15 @@ import {
   twitterUtils,
 } from '../config'
 
-import {users} from '../controllers/UserController';
+import { getByLoginAndPassword, getByEmail } from '../repositories/userRepository';
 
 
 passport.use(new LocalStrategy({
     usernameField: 'login',
   },
-  (login, password, cb) => {
+  async (login, password, cb) => {
 
-    const user = users.find(user => user.login = login && user.password === password);
+    const user = await getByLoginAndPassword(login, password);
 
     if (!user) {
 
@@ -38,11 +38,11 @@ passport.use(new FacebookStrategy({
     callbackURL: facebookUtils.callbackURL,
     profileFields: ['id', 'displayName', 'emails']
   },
-  (accessToken, refreshToken, profile, cb) => {
+  async (accessToken, refreshToken, profile, cb) => {
 
     const { emails } = profile;
 
-    const user = users.find(user => user.email === emails[0].value);
+    const user = await getByEmail(emails[0].value);
 
     if (!user) {
 
@@ -61,11 +61,11 @@ passport.use(new TwitterStrategy({
     callbackURL: twitterUtils.callbackURL,
     includeEmail: true,
   },
-  (token, tokenSecret, profile, cb) => {
+  async (token, tokenSecret, profile, cb) => {
 
     const { emails } = profile;
 
-    const user = users.find(user => user.email === emails[0].value);
+    const user = await getByEmail(emails[0].value);
 
     if (!user) {
 
@@ -83,11 +83,11 @@ passport.use(new GoogleStrategy({
     clientSecret: googleUtils.clientSecret,
     callbackURL: googleUtils.callbackURL
   },
-  (accessToken, refreshToken, profile, cb) => {
+  async (accessToken, refreshToken, profile, cb) => {
 
     const { emails } = profile;
 
-    const user = users.find(user => user.email === emails[0].value);
+    const user = await getByEmail(emails[0].value);
 
     if (!user) {
 
