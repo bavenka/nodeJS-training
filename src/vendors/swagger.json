@@ -1,0 +1,476 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "nodeJS training",
+    "version": "1.0.0",
+    "title": "nodeJS-training",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "users"
+    },
+    {
+      "name": "products"
+    },
+    {
+      "name": "cities"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get all users",
+        "description": "Returns all users\n",
+        "operationId": "getUsers",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Remove user by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The user's id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Get all products",
+        "description": "Returns all products\n",
+        "operationId": "getProducts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of products",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Add new Product",
+        "description": "Returns new product\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "product",
+            "description": "Product to create.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product created.",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Get product by id",
+        "description": "Returns a product by id\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The product's id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Remove product by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The product's id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/products/{id}/reviews": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Get product reviews by id",
+        "description": "Returns product reviews by id\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The product's id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product reviews",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductReviews"
+              }
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/cities": {
+      "get": {
+        "tags": [
+          "cities"
+        ],
+        "summary": "Get all cities",
+        "description": "Returns all cities\n",
+        "operationId": "getCities",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of cities",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/City"
+              }
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cities"
+        ],
+        "summary": "Add new City",
+        "description": "Returns new city",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "city",
+            "description": "The city to create.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/City"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "City created.",
+            "schema": {
+              "$ref": "#/definitions/City"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    },
+    "/cities/{id}": {
+      "delete": {
+        "tags": [
+          "cities"
+        ],
+        "summary": "Delete City",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The city's id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/City"
+            }
+          },
+          "500": {
+            "description": "Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name",
+        "email",
+        "age"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5b69ab5fd24ad68a651d8d9b"
+        },
+        "name": {
+          "type": "string",
+          "example": "Pavel"
+        },
+        "email": {
+          "type": "string",
+          "example": "pavel@mail.ru"
+        },
+        "age": {
+          "type": "number",
+          "example": 22
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "int32",
+          "example": "2018-08-05T09:12:33.001Z"
+        }
+      },
+      "example": {
+        "_id": "5b69ab5fd24ad68a651d8d9b",
+        "name": "Pavel",
+        "email": "pavel@mail.ru",
+        "age": 22,
+        "lastModifiedDate": "2016-08-05T09:12:33.001Z"
+      }
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name",
+        "price"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5b6438d7cf01f7c936596559"
+        },
+        "name": {
+          "type": "string",
+          "example": "Supreme T-Shirt"
+        },
+        "price": {
+          "type": "number",
+          "example": 12
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProductReviews"
+          }
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "int32",
+          "example": "2016-08-05T09:12:33.001Z"
+        }
+      },
+      "example": {
+        "_id": "5b6438d7cf01f7c936596559",
+        "name": "Supreme T-Shirt",
+        "price": 12,
+        "reviews": [
+          {
+            "stars": 5,
+            "comment": "a good product"
+          }
+        ],
+        "lastModifiedDate": "2016-08-05T09:12:33.001Z"
+      }
+    },
+    "City": {
+      "type": "object",
+      "required": [
+        "_id",
+        "name",
+        "country"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5b640933cf01f7c936596319"
+        },
+        "name": {
+          "type": "string",
+          "example": "Grodno"
+        },
+        "country": {
+          "type": "string",
+          "example": "Belarus"
+        },
+        "capital": {
+          "type": "boolean",
+          "example": false
+        },
+        "location": {
+          "$ref": "#/definitions/CityLocation"
+        },
+        "lastModifiedDate": {
+          "type": "string",
+          "format": "int32",
+          "example": "2016-08-05T09:12:33.001Z"
+        }
+      },
+      "example": {
+        "_id": "5b3be96388c5363832da0e9e",
+        "name": "Grodno",
+        "country": "Belarus",
+        "capital": false,
+        "options": {
+          "lat": 53,
+          "long": 51
+        },
+        "lastModifiedDate": "2016-08-05T09:12:33.001Z"
+      }
+    },
+    "ProductReviews": {
+      "properties": {
+        "stars": {
+          "type": "number",
+          "example": 5
+        },
+        "comment": {
+          "type": "string",
+          "example": "a good product"
+        }
+      }
+    },
+    "CityLocation": {
+      "properties": {
+        "lat": {
+          "type": "number",
+          "example": 53.0
+        },
+        "long": {
+          "type": "number",
+          "example": 51.0
+        }
+      }
+    }
+  }
+}
